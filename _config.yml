@@ -18,10 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Programming Notes by Chad / Yin Yang House 
+title: Tech Notes by Chad / Yin Yang House Dev 
 email: community@yinyanghouse.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Collection of notes related to the web development and DevOps work for the Yin Yang House by Chad Dupuis.
+  Web Dev and DevOps Notes for the Yin Yang House by Chad Dupuis.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 domain: chaddupuis.github.io
