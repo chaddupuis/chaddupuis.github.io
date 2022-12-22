@@ -3,7 +3,7 @@
   title:  "Ubuntu 20.04 Server Builds With Packer On VMWare ESXi 6"
   date:   2022-12-22 13:57:09 -0600
   categories: webdev vmware packer
-  ---
+---
 
 This turned out to be a much longer process than I would have hoped, so I wanted to capture a few of my notes.  There are many posts out there discussing packer and ubuntu's new auto install syntax for 20.04.  Many of them, however, are for vsphere and the ones that are for esxi I couldn't get to work through completion.  I'll highlight a few of the major issues and then post what did work.
 
