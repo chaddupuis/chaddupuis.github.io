@@ -28,6 +28,11 @@ domain: chaddupuis.github.io
 twitter_username: DupuisChad
 github_username:  chaddupuis
 
+author:
+  name: Chad Dupuis
+  twitter: DupuisChad
+  picture: /assets/images/ckdzdogz.png
+
 # Build settings
 #theme: minima
 #theme: tactile
