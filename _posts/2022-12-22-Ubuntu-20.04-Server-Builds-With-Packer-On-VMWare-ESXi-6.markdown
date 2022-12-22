@@ -1,6 +1,6 @@
 ---
   layout: post
-  title:  Ubuntu 20.04 Server Builds With Packer On VMWare ESXi 6
+  title:  "Ubuntu 20.04 Server Builds With Packer On VMWare ESXi 6"
   date:   2022-12-22 13:57:09 -0600
   categories: webdev vmware packer
   ---
