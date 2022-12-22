@@ -10,26 +10,31 @@
 @import "basically-basic";
 
 a {
-    color:#5cc4b5;
+    color:#028482;
 }
 
 a:hover {
-    color:#5cc4b5;
+    color:#028482;
     text-decoration: underline;
 }
 
 .entry-meta .icon {
-    fill: #5cc4b5;
+    fill: #028482;
 }
 
 .entry a {
-    color: #5cc4b5;
+    color: #028482;
 }
 
 .sidebar li a:hover {
-    color:#5cc4b5;
+    color:#028482;
 }
 
 .intro-title {
     font-size: 30px;
+}
+
+.entries-list .entry-title a:hover {
+    color:#028482;
+    text-decoration: underline;
 }
