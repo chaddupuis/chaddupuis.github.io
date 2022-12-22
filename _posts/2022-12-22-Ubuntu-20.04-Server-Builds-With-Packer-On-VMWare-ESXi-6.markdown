@@ -1,0 +1,252 @@
+---
+  layout: post
+  title:  Ubuntu 20.04 Server Builds With Packer On VMWare ESXi 6
+  date:   2022-12-22 13:57:09 -0600
+  categories: webdev vmware packer
+  ---
+
+This turned out to be a much longer process than I would have hoped, so I wanted to capture a few of my notes.  There are many posts out there discussing packer and ubuntu's new auto install syntax for 20.04.  Many of them, however, are for vsphere and the ones that are for esxi I couldn't get to work through completion.  I'll highlight a few of the major issues and then post what did work.
+
+My primary issue with packer and esxi, for which there are many related bug reports/issues posted with no obvious solutions, is that the IP address would change between starting packer build and after the install would reboot before it completed building - hence the dreaded **"Waiting for SSH"** ([example](https://github.com/hashicorp/packer/issues/2509)) and the more dreaded **"SSH timeout"** ([example](https://discuss.hashicorp.com/t/ssh-issues-for-raw-build-of-ubuntu-20-04/14223/6)).  I got around this using a few mechanisms which did work, but may not work in every environment.  
+
+***tl;dr a mix of a fake mac address in esxi with a static reservation on my network and then manually setting packer to look for ssh at a specific address, not the address it started with.***
+
+The posts that got me 90% of there were:
+- [Building Virtual Machines with Packer on ESXi 6](https://nickcharlton.net/posts/using-packer-esxi-6.html)
+- [Notes on the autoinstall configuration file format for Ubuntu 20.04](https://utcc.utoronto.ca/~cks/space/blog/linux/Ubuntu2004AutoinstFormat)
+
+Besides the IP address issue, the other primary issue was the changes Ubuntu had made to their [autoinstall format](https://ubuntu.com/server/docs/install/autoinstall) for 20.04 - using subiquity instead of the previous debian installer.  There is simply less comprehensive documentation available.
+
+I'll post working json files, etc. below, but as this post is to highlight the things that may not be working for you, here are the important parts:
+
+## ip address issues / ssh waiting/timeout
+
+ESXi will let you create any MAC address within it's allowed range and will run with it.  So look at a couple of running vm's and just slightly change the last two digits or so of the MAC address and make that your MAC for packer builds.  **Note** if you choose an address that ESXi doesn't like, it will tell you - so if you are getting build failures look at ESXi - it will say "invalid MAC" when attempting the vm creation.
+
+Then take that MAC and on your network reserve an ip address, say 192.168.0.127, for that MAC.  Now for the important part in your packer json:
+
+``` json
+...
+      "communicator": "ssh",
+      "ssh_username":  "[redacted]",
+      "ssh_password": "[redacted]",
+      **"ssh_host": "192.168.0.127",**  ## whatever you reserved
+      "ssh_pty": true,
+      "ssh_timeout":  "30m",
+      "ssh_handshake_attempts": "100",
+      "boot_wait":  "5s",
+
+      "boot_command": [
+        "<esc><esc><esc>",
+        "<enter><wait>",
+        "/casper/vmlinuz ",
+        "root=/dev/sr0 ",
+        "initrd=/casper/initrd ",
+        **"ip=192.168.0.127 ",** ## set your reserved ip here
+        "autoinstall ",
+        "ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-20-04-2/",
+        "<enter>"
+      ],
+...
+```
+
+Now if you watch the process in the ESXi gui, you will notice that after you start "packer build", when the VM comes up ***even though you have reserved an IP for that particular MAC address you won't actually get that address*** (hence why you need this article :-).  After ubuntu reboots to complete the install you will eventually get your reserved address and then the packer build process will finish successfully.
+
+Then in your **user-data** file for the ubuntu installer you can set the ip manually (I tried leaving this as DHCP and even with a reserved IP it didn't work).  It was less fighting to simply rewrite the IP etc in post build scripts than it was to figure this out, so...:
+
+``` yaml
+  network:
+    ethernets:
+      ens160:
+        ** addresses: [192.168.0.127/25] ** ## set your reserved ip here
+        gateway4: 192.168.0.1
+        nameservers:
+          addresses: [192.168.0.1, 8.8.8.8]
+    version: 2
+ ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  packages:
+   ** - open-vm-tools ** ## important
+
+... 
+
+  late-commands:
+    - sed -i 's/^#*\(send dhcp-client-identifier\).*$/\1 = hardware;/' /target/etc/dhcp/dhclient.conf
+    - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+  version: 1
+
+```
+
+So essentially follow the steps in [Nick's Article](https://nickcharlton.net/posts/using-packer-esxi-6.html) referenced above.  And then possibly use some variation of my complete json and user-data files.
+
+For your environment it is possibly easiest to first manually build an ubuntu 20.04 server, then grab the generated user-data and modify as necessary for your automated packer builds.  You can find the autogenerated file here:
+
+``` bash
+sudo cat /var/log/autoinstall-user-data
+```
+
+The only other tidbit you may need is to hash whatever password you might want to use as a default user.  This can be accomplished with:
+``` bash
+openssl passwd -1
+```
+Enter your password and just take the result and put it into your user-data file.
+
+Below are the files I used to that worked successfully with only the obvious parts (passwords, etc.) redacted.  I hope this saves you some time.......
+
+**Note** I used a sub folder under http named "ubuntu-20-04-2" - this is referenced in the boot command.
+
+So the full packer build command would be:
+``` bash
+/usr/bin/packer build -force -var-file esxi-variables.json ubuntu2004-builder.json
+```
+
+## ubuntu2004-builder.json
+``` json
+{  
+	"builders": [
+    {
+      "name": "ubuntu2004-t-server",
+      "type": "vmware-iso",
+      "guest_os_type": "ubuntu-64",
+      "tools_upload_flavor": "linux",
+      "headless": true,
+
+      "remote_type": "esx5",
+      "remote_host": "[redacted]",
+      "remote_datastore": "[your datastore name]",
+      "remote_username": "{{user `esxi_username`}}",
+      "remote_password": "{{user `esxi_password`}}",
+      "keep_registered": true,
+      "vnc_disable_password": true,
+      "skip_export": true,
+      "iso_url": "http://releases.ubuntu.com/focal/ubuntu-20.04.2-live-server-amd64.iso",
+      "iso_checksum": "d1f2bf834bbe9bb43faf16f9be992a6f3935e65be0edece1dee2aa6eb1767423",
+      "http_directory":  "./http/",
+
+      "disk_size":  61440,
+      "disk_type_id": "thin",
+      "vmx_data": {
+        "memsize": 3072,
+        "numvcpus": 1,
+        "ethernet0.present": "TRUE",
+        "ethernet0.virtualDev": "vmxnet3",
+        "ethernet0.networkName": "Host Network",
+        "ethernet0.wakeOnPcktRcv": "FALSE",
+        "remotedisplay.vnc.enabled": "TRUE",
+        "vhv.enable": "TRUE"
+      },
+
+      "communicator": "ssh",
+      "ssh_username":  "[your username]",
+      "ssh_password": "[your pass cleartext that matches hash in your user-data]",
+      "ssh_host": "[the ip you set]",
+      "ssh_pty": true,
+      "ssh_timeout":  "30m",
+      "ssh_handshake_attempts": "100",
+      "boot_wait":  "5s",
+
+      "boot_command": [
+        "<esc><esc><esc>",
+        "<enter><wait>",
+        "/casper/vmlinuz ",
+        "root=/dev/sr0 ",
+        "initrd=/casper/initrd ",
+        "ip=[the ip you set] ",
+        "autoinstall ",
+        "ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-20-04-2/",
+        "<enter>"
+      ],
+      "shutdown_command": "echo 'testubuntu' | sudo -S /sbin/shutdown -P now"
+
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["ls /"]
+    }
+  ]
+}
+
+
+```
+
+## esxi-variables.json
+
+``` json
+{
+    "esxi_host": "[your host ip]",
+    "esxi_datastore": "[your datastore]",
+    "esxi_username": "",
+    "esxi_password": ""
+}
+
+```
+
+## ./http/ubuntu-20-04-2/user-data (also make a blank file in this directory called "meta-data")
+
+``` yaml
+#cloud-config
+autoinstall:
+  apt:
+    geoip: true
+    preserve_sources_list: false
+    primary:
+    - arches: [amd64, i386]
+      uri: http://us.archive.ubuntu.com/ubuntu
+    - arches: [default]
+      uri: http://ports.ubuntu.com/ubuntu-ports
+  identity: {
+    hostname: ubuntu2004-t-server, 
+    password:  [your hashed password for your ssh user],
+    realname: Your Name, 
+    username: your-ssh-user}
+  keyboard: {layout: us, toggle: null, variant: ''}
+  locale: en_US
+  network:
+    ethernets:
+      ens160:
+        addresses: [192.168.0.127/25]  ## this is the ip you dhcp/reserved for builds
+        gateway4: 192.168.0.1
+        nameservers:
+          addresses: [192.168.0.1, 8.8.8.8]
+    version: 2
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  packages:
+    - open-vm-tools
+  storage:
+    config:
+    - {ptable: gpt, path: /dev/sda, wipe: superblock, preserve: false, name: '', grub_device: true,
+      type: disk, id: disk-sda}
+    - {device: disk-sda, size: 1048576, flag: bios_grub, number: 1, preserve: false,
+      grub_device: false, type: partition, id: partition-0}
+    - {device: disk-sda, size: 1073741824, wipe: superblock, flag: '', number: 2,
+      preserve: false, grub_device: false, type: partition, id: partition-1}
+    - {fstype: ext4, volume: partition-1, preserve: false, type: format, id: format-0}
+    - {device: disk-sda, size: 63347621888, wipe: superblock, flag: '', number: 3,
+      preserve: false, grub_device: false, type: partition, id: partition-2}
+    - name: ubuntu-vg
+      devices: [partition-2]
+      preserve: false
+      type: lvm_volgroup
+      id: lvm_volgroup-0
+    - {name: ubuntu-lv, volgroup: lvm_volgroup-0, size: 31673286656B, preserve: false,
+      type: lvm_partition, id: lvm_partition-0}
+    - {fstype: ext4, volume: lvm_partition-0, preserve: false, type: format, id: format-1}
+    - {device: format-1, path: /, type: mount, id: mount-1}
+    - {device: format-0, path: /boot, type: mount, id: mount-0}
+  late-commands:
+    - sed -i 's/^#*\(send dhcp-client-identifier\).*$/\1 = hardware;/' /target/etc/dhcp/dhclient.conf
+    - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
+    - echo 'testubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/testubuntu
+  version: 1
+
+```
+
