@@ -30,7 +30,8 @@ github_username:  chaddupuis
 
 # Build settings
 #theme: minima
-them: tactile
+#theme: tactile
+remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
 plugins:
   - jekyll-feed
 
