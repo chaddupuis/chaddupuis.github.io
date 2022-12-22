@@ -9,5 +9,15 @@
 
 @import "basically-basic";
 
-$accent-color: #5cc4b5;
-$link-color: #5cc4b5;
+a {
+    color:#5cc4b5;
+}
+
+a:hover {
+    color:#5cc4b5;
+    text-decoration: underline;
+}
+
+.entry-meta .icon {
+    fill: #5cc4b5;
+}
