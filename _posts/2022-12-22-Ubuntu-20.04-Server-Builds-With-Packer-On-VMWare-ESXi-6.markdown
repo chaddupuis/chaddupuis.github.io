@@ -26,6 +26,7 @@ ESXi will let you create any MAC address within it's allowed range and will run 
 Then take that MAC and on your network reserve an ip address, say 192.168.0.127, for that MAC.  Now for the important part in your packer json:
 
 {% highlight json %}
+{% raw %}
 ...
       "communicator": "ssh",
       "ssh_username":  "[redacted]",
@@ -48,6 +49,7 @@ Then take that MAC and on your network reserve an ip address, say 192.168.0.127,
         "<enter>"
       ],
 ...
+{% endraw %}
 {% endhighlight %}
 
 Now if you watch the process in the ESXi gui, you will notice that after you start "packer build", when the VM comes up ***even though you have reserved an IP for that particular MAC address you won't actually get that address*** (hence why you need this article :-).  After ubuntu reboots to complete the install you will eventually get your reserved address and then the packer build process will finish successfully.
@@ -55,6 +57,7 @@ Now if you watch the process in the ESXi gui, you will notice that after you sta
 Then in your **user-data** file for the ubuntu installer you can set the ip manually (I tried leaving this as DHCP and even with a reserved IP it didn't work).  It was less fighting to simply rewrite the IP etc in post build scripts than it was to figure this out, so...:
 
 {% highlight yaml %}
+{% raw %}
   network:
     ethernets:
       ens160:
@@ -77,7 +80,7 @@ Then in your **user-data** file for the ubuntu installer you can set the ip manu
     - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
     - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
   version: 1
-
+{% endraw %}
 {% endhighlight %}
 
 So essentially follow the steps in [Nick's Article](https://nickcharlton.net/posts/using-packer-esxi-6.html) referenced above.  And then possibly use some variation of my complete json and user-data files.
@@ -106,6 +109,7 @@ So the full packer build command would be:
 
 ## ubuntu2004-builder.json
 {% highlight json %}
+{% raw %}
 {  
 	"builders": [
     {
@@ -173,19 +177,20 @@ So the full packer build command would be:
   ]
 }
 
-
+{% endraw %}
 {% endhighlight %}
 
 ## esxi-variables.json
 
 {% highlight json %}
+{% raw %}
 {
     "esxi_host": "[your host ip]",
     "esxi_datastore": "[your datastore]",
     "esxi_username": "",
     "esxi_password": ""
 }
-
+{% endraw %}
 {% endhighlight %}
 
 ## ./http/ubuntu-20-04-2/user-data (also make a blank file in this directory called "meta-data")
