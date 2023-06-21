@@ -18,10 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Tech Notes by Chad / Yin Yang House Dev 
+title: Chad Dupuis / Programmer / DevOps / Blogger 
 email: community@yinyanghouse.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Web Dev and DevOps Notes for the Yin Yang House by Chad Dupuis.
+  Web Developer, DevOps Engineer, Yin Yang House Author / Founder.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 domain: chaddupuis.github.io
@@ -36,12 +36,16 @@ author:
 # Build settings
 #theme: minima
 #theme: tactile
-remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
+remote_theme: pages-themes/cayman@v0.2.0
 plugins:
-  - jekyll-feed
+  - jekyll-remote-theme
 
-paginate: 5
-paginate_path: /page:num/
+#remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
+#plugins:
+#  - jekyll-feed
+
+#paginate: 5
+#paginate_path: /page:num/
 
 # Exclude from processing.
 # The following items will not be processed, by default.
