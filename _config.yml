@@ -27,6 +27,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 domain: chaddupuis.github.io
 twitter_username: DupuisChad
 github_username:  chaddupuis
+show_downloads: false
 
 author:
   name: Chad Dupuis
