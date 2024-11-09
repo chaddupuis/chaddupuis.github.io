@@ -9,7 +9,7 @@ const menuItems = [
   { title: 'Connect', path: '#connect' },
 ];
 ---
-<header class="sticky top-0 w-full justify-between items-center dark:bg-myteal-600 bg-white drop-shadow-sm p-4">
+<header class="sticky z-10 top-0 w-full justify-between items-center dark:bg-myteal-600 bg-white drop-shadow-sm p-4">
     <nav class="container mx-auto px-6 py-3">
         <div class="flex justify-between items-center">
             <!-- Logo -->
@@ -48,10 +48,10 @@ const menuItems = [
 
 
     <!-- Pop Out Navigation -->
-    <nav class="fixed top-0 right-0 bottom-0 left-0 backdrop-blur-sm z-10" :class="openMenu ? 'visible' : 'invisible' " x-cloak>
+    <nav class="fixed top-0 right-0 bottom-0 left-0 h-screen backdrop-blur-sm" :class="openMenu ? 'visible' : 'invisible' " x-cloak>
 
     <!-- UL Links -->
-    <ul class="absolute top-0 right-0 bottom-0 w-10/12 py-4 dark:bg-myteal-500 bg-myteal-400 drop-shadow-2xl z-10 transition-all"
+    <ul class="absolute z-10 top-0 right-0 bottom-0 w-10/12 py-4 dark:bg-myteal-500 bg-myteal-400 drop-shadow-2xl transition-all"
         :class="openMenu ? 'translate-x-0' : 'translate-x-full'">
 
         {
