@@ -1,5 +1,5 @@
 ---
-import chadImage from '@assets/images/chad-photo-bike.png';
+import chadImage from '@assets/images/chad-photo-bike.webp';
 import { Image } from 'astro:assets';
 ---
 
@@ -19,9 +19,9 @@ import { Image } from 'astro:assets';
                 <Image
                 src={chadImage}
                 alt="Photo of Chad"
-                format="png"
+                format="webp"
                 width={300}
-                loading="eager"
+                loading="lazy"
                 class="rounded-lg"
             />
                     </div>
