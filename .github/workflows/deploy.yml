@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# above is there to stop vscode errors
 name: Deploy to GitHub Pages
 
 on:
