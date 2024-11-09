@@ -1,0 +1,54 @@
+---
+import Footer from '@components/Footer.astro';
+import Navbar from '@components/Navbar.astro';
+import { SEO } from 'astro-seo';
+import '@styles';
+
+export interface LayoutProps {
+	title: string;
+}
+
+const { title = 'Chad Dupuis | Programmer, Systems Engineer, Writer' } = Astro.props as LayoutProps;
+---
+
+<!DOCTYPE html>
+<html 
+    lang="en" 
+    class="scroll-smooth" 
+    data-testid="html" 
+    x-data="{ darkMode: localStorage.getItem('dark') === 'true' || (localStorage.getItem('dark') === null && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
+    x-init="$watch('darkMode', val => localStorage.setItem('dark', val))"
+    x-bind:class="{ 'dark': darkMode }"
+>
+	<head>
+		<SEO
+			title="Portfolio Site For Chad Dupuis:  Programmer, Systems Engineer, Writer"
+			description="Linux Systems Engineer and Full Stack Web Programmer with over 15 years of experience in Higher Education.  Founder and Chief Developer and Author of the Yin Yang House Chinese Medicine Community Website - an acupuncturist and herbalist for over two decades."
+		/>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<title>{title}</title>
+	</head>
+    <!-- <body x-data="{ openMenu : false }" :class="openMenu ? 'overflow-hidden' : 'overflow-visible' " class="mx-auto max-w-screen-xl bg-white px-4 py-4 font-mytext text-white dark:bg-black xs:text-[16px] md:text-[18px]"> -->
+
+    <body x-data="{ openMenu : false }" :class="openMenu ? 'overflow-hidden' : 'overflow-visible' " class="bg-white font-mytext text-white dark:bg-black xs:text-[16px] md:text-[18px]">
+
+        <style>
+          [x-cloak] {
+            display: none !important;
+          }
+        </style>
+		<Navbar />
+		<slot />
+		<Footer />
+		<style is:global>
+			img {
+				content-visibility: auto;
+			}
+		</style>
+	</body>
+</html>

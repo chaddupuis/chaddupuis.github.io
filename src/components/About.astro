@@ -1,0 +1,30 @@
+---
+import chadImage from '@assets/images/chad-photo-bike.png';
+import { Image } from 'astro:assets';
+---
+
+    <!-- About Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32" id="about">
+        <h2 class="mb-4">About Me</h2>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+                    I'm currently working as a <strong>linux systems engineer</strong> at the University of Minnesota Health Sciences group developing and supporting research computing/hpc and web application environments within a HIPAA compliant space.  I have <strong>over 15 years of information technology experience</strong> within institutions of higher education.  Broad experiences with linux, systems automation, full-stack web development and support and documentation of processes.  <strong>Bachelors of Science Degree</strong> in Management Information Systems from <a href="https://eller.arizona.edu/departments-research/schools-departments/mis" class="underline">the University of Arizona</a>.
+                </p>
+                <p>
+                    <strong>Founder and Chief Developer</strong> of the <a class="underline" href="https://yinyanghouse.com/">Yin Yang House</a> Chinese Medicine Community website, which has been active for over 20 years and has gone through many iterations related to growth of content and community engagement.  Was a licensed acupuncturist and herbalist for two decades with large clinical practices.  <strong>Masters of Acupuncture Degree</strong> in Chinese and Japanese Acupuncture from the <a href="https://www.mcphs.edu/academics/schools/new-england-school-of-acupuncture" class="underline">New England School of Acupuncture</a> (now part of the Massachusetts College of Pharmacy and Health Sciences).
+                </p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={chadImage}
+                alt="Photo of Chad"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end About Section -->

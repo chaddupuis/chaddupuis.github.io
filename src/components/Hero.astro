@@ -1,0 +1,27 @@
+---
+import heroImage from '@assets/images/chad-yinyang-computer.png';
+import { Image } from 'astro:assets';
+---
+
+    <!-- Hero Section -->
+    <section class="container mx-auto p-4 my-10">
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <h1 class="mb-10">
+                    Hi!  I'm Chad Dupuis <br /><span class="text-myteal-600">&middot;</span> a Programmer, Systems Engineer and Writer <span class="text-myteal-600">&middot;</span> Based in Minneapolis
+                </h1>            
+            </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={heroImage}
+                alt="Yin Yang Coding Graphic"
+                format="png"
+                width={400}
+                height={400}
+                class="rounded-lg"
+                loading="eager"
+            />
+                </div>
+        </div>
+    </section>
+    <!-- end Hero Section -->

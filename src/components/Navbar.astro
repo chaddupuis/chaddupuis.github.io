@@ -1,0 +1,82 @@
+---
+import ToggleTheme from '@components/ui/ToggleTheme.astro';
+import logoImage from '@assets/images/black-white-face-code.png';
+import { Image } from 'astro:assets';
+
+const menuItems = [
+  { title: 'About', path: '#about' },
+  { title: 'Work', path: '#work' },
+  { title: 'Connect', path: '#connect' },
+];
+---
+<header class="sticky top-0 w-full justify-between items-center dark:bg-myteal-600 bg-white drop-shadow-sm p-4">
+    <nav class="container mx-auto px-6 py-3">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="">
+                <Image 
+                src={logoImage}
+                alt="Chad's Logo"
+                format="png"
+                width={50}
+                height={50}
+                loading="eager" />
+            </a>
+        <div class="hidden md:flex items-center space-x-4">
+            {
+                menuItems.map((item) => (
+                        <a
+                            aria-label="navigation link"
+                            href={item.path} 
+                            class="py-2 text-black hover:text-myteal-300 dark:text-white dark:hover:text-myteal-200 hover:border-spacing-20 hover:bg-slate-800 hover:rounded-lg md:px-2 lg:px-3" 
+                        >
+                            {item.title}
+                        </a>
+                ))
+            }
+        </div>
+        <div class="flex items-end space-x-4">
+            <ToggleTheme />
+            <button class="dark:text-mybrown-100 text-mybrown-600 flex sm:justify-end md:hidden flex-col items-center align-middle px-5" @click="openMenu = !openMenu ">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <span class="text-xs">Menu</span>
+            </button>
+        </div>
+    </nav>
+
+
+    <!-- Pop Out Navigation -->
+    <nav class="fixed top-0 right-0 bottom-0 left-0 backdrop-blur-sm z-10" :class="openMenu ? 'visible' : 'invisible' " x-cloak>
+
+    <!-- UL Links -->
+    <ul class="absolute top-0 right-0 bottom-0 w-10/12 py-4 dark:bg-myteal-500 bg-myteal-400 drop-shadow-2xl z-10 transition-all"
+        :class="openMenu ? 'translate-x-0' : 'translate-x-full'">
+
+        {
+        menuItems.map((item) => (
+                <li class="border-b border-inherit">
+                    <a
+                        aria-label="navigation link"
+                        href={item.path}
+                        class="font-mytext block p-4 text-black hover:text-myteal-300 dark:text-white dark:hover:text-myteal-200 hover:border-spacing-20 hover:bg-slate-800 hover:rounded-lg"
+                        x-on:click="openMenu = !openMenu "
+                    >
+                        {item.title}
+                    </a>
+                </li>
+        ))
+    }
+    </ul>    
+    <!-- Close Button -->
+    <button class="absolute top-0 right-0 bottom-0 left-0 dark:text-mybrown-100 text-mybrown-600" @click="openMenu = !openMenu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-2 left-2" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+
+    </nav>
+</header>
+

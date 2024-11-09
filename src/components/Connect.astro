@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import resumepdf from '@assets/resume-cdupuis-2024-webv.pdf';
+import ghSvg from '@assets/images/github-mark.svg'; 
+---
+
+<!-- Deployed Code (gists) - code (github) Badge (linkedin) -  Full Coverage (resume) -->
+
+    <!-- About Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32" id="connect">
+        <h2 class="mb-4">Connect</h2>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <h3 class="mb-5">| Me |</h3>
+                <ul class="list-outside dark:text-myteal-300 text-slate-800">
+                    <li><span class="font-myicons">file_present</span> <a class="underline" href={resumepdf} target="_blank">My Resume (PDF)</a></li>
+                    <li><span class="font-myicons">code</span> <a class="underline" href="https://github.com/chaddupuis/" target="_blank">My GitHub Profile</a></li>
+                    <li><span class="font-myicons">terminal</span> <a class="underline" href="https://gist.github.com/chaddupuis/" target="_blank">My GitHub Gists</a></li>
+                    <li><span class="font-myicons">handshake</span> <a class="underline" href="https://www.linkedin.com/in/chadjdupuis/" target="_blank">Me @ LinkedIn</a></li>
+                </ul>
+                </div>
+            <div class="w-full lg:w-1/2 p-4">
+                <h3 class="mb-5">| Yin Yang House |</h3>
+                <ul class="list-outside dark:text-myteal-300 text-slate-800">
+                    <li><span class="font-myicons">public</span> <a class="underline" href="https://github.com/chaddupuis/" target="_blank">Me @ Yin Yang House</a></li>
+                    <li><span class="font-myicons">code</span> <a class="underline" href="https://github.com/chaddupuis/" target="_blank">YYH @ Github</a></li>
+                    <li><span class="font-myicons">handshake</span> <a class="underline" href="https://github.com/chaddupuis/" target="_blank">YYH @ LinkedIn</a></li>
+                </ul>
+                    </div>
+        </div>
+    </section>
+    <!-- end About Section -->

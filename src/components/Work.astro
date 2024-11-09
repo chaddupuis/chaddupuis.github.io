@@ -1,0 +1,198 @@
+---
+import UMNImage from '@assets/images/umn-350.png';
+import YYHImage from '@assets/images/yin-yang-house-350.png';
+import MITImage from '@assets/images/mit-350.png';
+import UAImage from '@assets/images/ua-350.png';
+import UCSCImage from '@assets/images/ucsc-350.png';
+import USFImage from '@assets/images/usf-350.png';
+import MSUImage from '@assets/images/msu-350.png';
+
+import { Image } from 'astro:assets';
+---
+<!-- Work Header -->
+<section class="container mx-auto p-4 my-10 scroll-mt-32" id="work">
+	<h2 class="mb-4">Work History</h2>
+</section>
+
+	<!-- UMN Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32">
+        <h3 class="mb-4">University of Minnesota | Linux Engineer | 2001 - Present</h3>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+					Linux system administrator within the Health Sciences Technology Infrastructure and Application Hosting team. Automation tooling with vSphere, satellite, chef, python and bash to support 100's of linux servers (redhat and ubuntu) within a HIPAA compliant environment. Develop and support hosting solutions for in-house developed web applications (primarily ruby on rails) and a range of 3rd party applications such as redcap - utilizing haproxy, apache and devops pipelines with git and jenkins.                
+				</p>
+                <p>
+					Research computing development and support for bioinformatics processing pipelines - GPU cluster installation and management - slurm, apptainer/docker, python package management, and a variety of gpu/hpc related libraries.                
+				</p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={UMNImage}
+                alt="UMN Logo"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end UMN Section -->
+
+	<!-- YYH Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32">
+        <h3 class="mb-4">Yin Yang House | Founder and Developer | 2006 - Present</h3>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+                    Web Developer and DevOps Engineer for the Yin Yang House. Primary tools include python, django, postgreSQL, git, ansible and bash. Development and usage of lamp/lemp stack applications.				
+                </p>
+                <p>
+                    Built and managed multiple commercial office spaces, hired and managed multiple staff members, practitioners and developers (both in house and off-shore).  Content contributor with over 20 years of clinical experience. Instructor for Yang style Tai Chi and a variety of forms of meditation.
+                </p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={YYHImage}
+                alt="YYH Logo"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end YYH Section -->
+
+	<!-- MIT Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32">
+        <h3 class="mb-4">Massachusetts Institute of Technology | Senior Systems Analyst | 2001 - 2006 & 1996 - 1997</h3>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+                    Strategized, implemented, designed and/or maintained various, mostly high level, projects within MIT’s Academic Computing department. Examples are parallel computing clusters, windows domain development/management, automated deployment mechanisms, and educational/collaboration tools. Served as a consultant to various MIT departments helping them to utilize technologies within an educational technology framework, focusing on projects which utilize technology that largely fell outside of the general MIT support structure.
+				</p>
+                <p>Upper tier support role devoted entirely to faculty usages of the MIT/Athena computing environment.</p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={MITImage}
+                alt="MIT Logo"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end MIT Section -->
+
+    <!-- UA Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32">
+        <h3 class="mb-4">University of Arizona | Applications Systems Analyst and Network Admin | 2000 - 2001 & 1993 - 1995</h3>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+                    Served as Webmaster and Systems Administrator for the Wildcat Online, Kamp Student Radio, TV3, Advertising and Production Systems and other on-line/networked functions of Arizona Student Media.               
+                 </p>
+                <p>
+                    Analyst within the Workgroup and Network Consulting group which provided consulting, development and upper tier support for departmental networks across campus. Novell network administration, general mac and windows applications support. Installs and support for all associated hardware. 
+                </p>
+                <p>
+                    Governor's recognition award for an extensive project bringing large segments of university departments onto the internet.
+                </p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={UAImage}
+                alt="UA Logo"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end UA Section -->
+
+	<!-- UCSC Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32">
+        <h3 class="mb-4">University of California, Santa Cruz | Computing Coordinator | 1999 - 2000 & 1997</h3>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+                    Supported the use of various technologies by the Faculty, Staff and Graduate Students of the departments under my supervision. This involves everything from hardware selection and setup to software installation, configuration and training.
+                </p><p>
+                    Designed and implemented networked solutions for the Social Sciences Division.
+                </p><p>    
+                    Managed solaris servers to serve applications, provide enterprise-wide backups, web servers, and associated tasks.
+                </p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={UCSCImage}
+                alt="UCSC Logo"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end UCSC Section -->
+
+
+	<!-- USF Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32">
+        <h3 class="mb-4">University of San Francisco, School of Law | Network Administrator | 1997 - 1998</h3>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+                    Managed various Windows and Unix servers as well as supporting and maintaining 150+ windows PC and Macintosh computers.
+                </p><p>
+                    Assisted in the long-term development efforts with regards to the use of various educational technologies within both the Law School and the Law Library. Items included web-based delivery tools and enterprise-wide access for legal titles.
+                </p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={USFImage}
+                alt="USF Logo"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end USF Section -->
+
+    <!-- USF Section -->
+    <section class="container mx-auto p-4 my-10 scroll-mt-32">
+        <h3 class="mb-4">Michigan State University | Technical Support Specialist | 1989 - 1992</h3>
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/2 p-2">
+                <p>
+                    Technical support, training classes, and systems management for the outreach offices across the state of MI and work directly with the Vice Provost office. 
+                </p>
+                <p>NeXT computers and IBM 3090 mainframe consulting and end-user training.</p>
+                </div>
+            <div class="flex items-center justify-center w-full lg:w-1/2 p-2">
+                <Image
+                src={MSUImage}
+                alt="MSU Logo"
+                format="png"
+                width={300}
+                loading="eager"
+                class="rounded-lg"
+            />
+                    </div>
+        </div>
+    </section>
+    <!-- end MSU Section -->
+    
