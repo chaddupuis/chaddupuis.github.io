@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-# above is there to stop vscode errors
 name: Deploy to GitHub Pages
 
 on:
@@ -26,6 +24,7 @@ jobs:
         uses: withastro/action@v3
         with:
           path: ./NODE-App
+          package-manager: npm@latest
         # with:
           # path: . # The root location of your Astro project inside the repository. (optional)
           # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
