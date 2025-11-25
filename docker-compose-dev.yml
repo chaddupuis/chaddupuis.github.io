@@ -12,10 +12,10 @@ services:
     networks:
       - chadyyhmsg_network
     container_name: ${NODE_CONTAINER_NAME}
-    command: bash -c "cd /app && npm install && npm run dev -- --host"
+    #command: bash -c "cd /app && sleep infinity"
+    command: bash -c "cd /app && npm install && npm outdated && npm run dev -- --host"
     volumes:
       - ./NODE-App:/app
-      #- ./dev-requirements.txt:/sites/requirements.txt:rw
     ports:
       - "4321:4321"
 

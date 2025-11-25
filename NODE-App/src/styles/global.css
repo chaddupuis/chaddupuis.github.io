@@ -1,10 +1,42 @@
-@import '@fontsource/nunito';
-@import '@fontsource/big-shoulders-stencil-text';
-@import '@fontsource/material-icons-outlined';
+@import 'tailwindcss';
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-myteal-50: #eff9f8;
+    --color-myteal-100: #def3f0;
+    --color-myteal-200: #bee7e1;
+    --color-myteal-300: #9ddcd3;
+    --color-myteal-400: #7dd0c4;
+    --color-myteal-500: #5cc4b5;
+    --color-myteal-600: #4a9d91;
+    --color-myteal-700: #37766d;
+    --color-myteal-800: #254e48;
+    --color-myteal-900: #122724;
+    --color-mygreen-50: #f5faf0;
+    --color-mygreen-100: #ecf5e1;
+    --color-mygreen-200: #d9ecc2;
+    --color-mygreen-300: #c5e2a4;
+    --color-mygreen-400: #b2d985;
+    --color-mygreen-500: #9fcf67;
+    --color-mygreen-600: #7fa652;
+    --color-mygreen-700: #5f7c3e;
+    --color-mygreen-800: #405329;
+    --color-mygreen-900: #202915;
+    --color-mybrown-50: #f3f1ea;
+    --color-mybrown-100: #e8e3d5;
+    --color-mybrown-200: #d0c6aa;
+    --color-mybrown-300: #b9aa80;
+    --color-mybrown-400: #a18d55;
+    --color-mybrown-500: #8a712b;
+    --color-mybrown-600: #6e5a22;
+    --color-mybrown-700: #53441a;
+    --color-mybrown-800: #372d11;
+    --color-mybrown-900: #1c1709;
+    --font-mytext: var(--font-nunito), sans-serif;
+    --font-mytitles: var(--font-big-shoulders-stencil-text), system-ui;
+    --font-myicons: var(--font-material-icons-outlined), sans-serif;
+}
 
 
 /* Chad specific styles */
@@ -19,8 +51,13 @@
     }
 }
 @layer base {
-    * {
-       @apply selection:dark:bg-myteal-100 selection:bg-myteal-300 selection:text-mybrown-500 motion-safe:animate-pulse motion-reduce:animate-none;
+    ::selection {
+        background-color: #7dd0c4;
+        color: #8a712b;
+    }
+    .dark ::selection {
+        background-color: #def3f0;
+        color: #8a712b;
     }
     h1, h2, h3 {
         @apply font-mytitles;

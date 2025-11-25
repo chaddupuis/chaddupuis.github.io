@@ -2,6 +2,7 @@
 import Footer from '@components/Footer.astro';
 import Navbar from '@components/Navbar.astro';
 import { SEO } from 'astro-seo';
+import { Font } from 'astro:assets';
 import '@styles';
 
 export interface LayoutProps {
@@ -25,6 +26,9 @@ const { title = 'Chad Dupuis | Programmer, Systems Engineer, Writer' } = Astro.p
 			title="Portfolio Site For Chad Dupuis:  Programmer, Systems Engineer, Writer"
 			description="Linux Systems Engineer and Full Stack Web Programmer with over 15 years of experience in Higher Education.  Founder and Chief Developer and Author of the Yin Yang House Chinese Medicine Community Website - an acupuncturist and herbalist for over two decades."
 		/>
+		<Font cssVariable="--font-nunito" preload />
+		<Font cssVariable="--font-big-shoulders-stencil-text" preload />
+		<Font cssVariable="--font-material-icons-outlined" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />

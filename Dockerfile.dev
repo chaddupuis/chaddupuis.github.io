@@ -3,4 +3,8 @@ FROM node:${NODE_IMAGE} as chadyyhmsgfront
 
 WORKDIR /app
 
-RUN apt update && apt upgrade -y 
+# Tailwind and Astro installs may pull Git-sourced deps, so ensure git is available
+RUN apt-get update \
+	&& apt-get upgrade -y \
+	&& apt-get install -y git \
+	&& rm -rf /var/lib/apt/lists/*
