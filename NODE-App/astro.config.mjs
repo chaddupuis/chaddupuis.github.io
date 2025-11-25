@@ -5,6 +5,8 @@ import sitemap from '@astrojs/sitemap';
 import alpinejs from '@astrojs/alpinejs';
 import tailwindcss from '@tailwindcss/vite';
 
+const tailwindPlugin = /** @type {any} */ (tailwindcss());
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://yyhmsg.net',
@@ -36,6 +38,6 @@ export default defineConfig({
         ],
     },
     vite: {
-        plugins: /** @type {import('vite').PluginOption[]} */ ([tailwindcss()]),
+        plugins: [tailwindPlugin],
     },
 });
