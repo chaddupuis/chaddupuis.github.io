@@ -36,6 +36,6 @@ export default defineConfig({
         ],
     },
     vite: {
-        plugins: [tailwindcss()],
+        plugins: /** @type {import('vite').PluginOption[]} */ ([tailwindcss()]),
     },
 });
